@@ -1,5 +1,5 @@
-JChroma - ChromaSDK for Java
-====
+JChroma - ChromaSDK for Java [WIP]
+==================================
 
 JChroma allows to use the Razer Chroma SDK for Razer devices with Java
 
