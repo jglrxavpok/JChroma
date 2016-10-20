@@ -7,8 +7,10 @@ Requirements
 ====
 
 In order to use the library, one must:
+
 1. Install the ChromaSDK (if not done already) [Link](http://developer.razerzone.com/chroma/)
 2. Have a Razer device to test it on
+
 
 Quick example
 ====
