@@ -49,4 +49,18 @@ public class ColorRef {
     public void setBlue(int blue) {
         this.blue = blue;
     }
+
+    public static ColorRef fromRGB(int bgr) {
+        int blue = bgr & 0xFF;
+        int green = (bgr >> 8) & 0xFF;
+        int red = (bgr >> 16) & 0xFF;
+        return new ColorRef(red, green, blue);
+    }
+
+    public static ColorRef fromBGR(int bgr) {
+        int red = bgr & 0xFF;
+        int green = (bgr >> 8) & 0xFF;
+        int blue = (bgr >> 16) & 0xFF;
+        return new ColorRef(red, green, blue);
+    }
 }

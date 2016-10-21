@@ -1,15 +1,10 @@
-import com.sun.jna.*;
-import com.sun.jna.ptr.PointerByReference;
 import org.jglr.jchroma.JChroma;
 import org.jglr.jchroma.effects.*;
 import org.jglr.jchroma.utils.ColorRef;
+import org.jglr.jchroma.utils.KeyboardKeys;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
 
 public class TestEffects {
 
@@ -24,6 +19,57 @@ public class TestEffects {
     @After
     public void dispose() {
         chroma.free();
+    }
+
+    @Test
+    public void progress() {
+        int maxCount = 5;
+        ProgressKeyboardEffect effect = new ProgressKeyboardEffect(KeyboardKeys.RZKEY_F1, KeyboardKeys.RZKEY_F12);
+        effect.setMinimumValue(0);
+        effect.setMaximumValue(100);
+        effect.setCurrentValue(0);
+        effect.setInRangeColor(new ColorRef(0, 0, 255));
+        effect.setOutsideRangeColor(new ColorRef(255, 0, 0));
+        long sleepTime = 10;
+        for (int count = 0; count < maxCount; count++) {
+            for (int i = 0; i < effect.getMaximumValue()+1; i++) {
+                effect.setCurrentValue(i);
+                chroma.createKeyboardEffect(effect);
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i < effect.getMaximumValue()+1; i++) {
+                effect.setCurrentValue(effect.getMaximumValue()-i);
+                chroma.createKeyboardEffect(effect);
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Test
+    public void custom() {
+        int step = 1000;
+        for (int index = 0; index < step; index++) {
+            ColorRef[][] colors = new ColorRef[6][22];
+            for (int i = 0; i < colors.length; i++) {
+                for (int j = 0; j < colors[0].length; j++) {
+                    colors[i][j] = ColorRef.fromBGR((int)(Math.random()*0xFFFFFF));
+                }
+            }
+            chroma.createKeyboardEffect(new CustomKeyboardEffect(colors));
+            try {
+                Thread.sleep(8000L/step);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Test

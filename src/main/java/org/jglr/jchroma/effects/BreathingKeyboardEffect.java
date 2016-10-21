@@ -68,7 +68,7 @@ public class BreathingKeyboardEffect extends KeyboardEffect {
         return struct;
     }
 
-    public class BreathingStructure extends Structure implements Structure.ByReference {
+    public static class BreathingStructure extends Structure implements Structure.ByReference {
 
         public int color1;
         public int color2;

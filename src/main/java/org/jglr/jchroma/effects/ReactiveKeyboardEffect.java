@@ -32,7 +32,7 @@ public class ReactiveKeyboardEffect extends KeyboardEffect {
         return struct;
     }
 
-    public class ReactiveStructure extends Structure implements Structure.ByReference {
+    public static class ReactiveStructure extends Structure implements Structure.ByReference {
 
         public int duration;
         public int color;

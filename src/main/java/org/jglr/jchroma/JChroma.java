@@ -59,7 +59,8 @@ public class JChroma {
     }
 
     /**
-     * Creates a keyboard effect on the currently plugged keyboard. The effect is immediately activated when calling this method
+     * Creates a keyboard effect on the currently plugged keyboard. The effect is immediately activated when calling this method.<br/>
+     * <b>Warning:</b> Any call to <code>createKeyboardEffect</code> will replace the current effect!
      * @param effect
      *          The effect to create
      * @throws JChromaException
