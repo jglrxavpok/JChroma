@@ -16,12 +16,13 @@ public class ColorRef {
     }
 
     /**
-     * Returns a RGB int corresponding to this color
+     * Returns a BGR int corresponding to this color. Why BGR? Because of historical reasons and camera manufacturers.<br/>
+     * Here's a link if you want: <a href="https://www.learnopencv.com/why-does-opencv-use-bgr-color-format/">Why does OpenCV use BGR color format?</a>
      * @return
-     *          A RGB int
+     *          A BGR int
      */
     public int getValue() {
-        return (getRed() & 0xFF) << 16 | (getGreen() & 0xFF) << 8 | (getBlue() & 0xFF);
+        return (getBlue() & 0xFF) << 16 | (getGreen() & 0xFF) << 8 | (getRed() & 0xFF);
     }
 
     public int getRed() {

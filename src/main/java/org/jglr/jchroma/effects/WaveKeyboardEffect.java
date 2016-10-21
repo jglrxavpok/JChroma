@@ -21,6 +21,14 @@ public class WaveKeyboardEffect extends KeyboardEffect {
         this.direction = direction;
     }
 
+    public WaveDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(WaveDirection direction) {
+        this.direction = direction;
+    }
+
     @Override
     public KeyboardEffectType getType() {
         return KeyboardEffectType.WAVE;
