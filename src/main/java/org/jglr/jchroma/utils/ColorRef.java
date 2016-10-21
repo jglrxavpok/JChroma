@@ -5,6 +5,7 @@ package org.jglr.jchroma.utils;
  */
 public class ColorRef {
 
+    public static final ColorRef NULL = new ColorRef(0, 0, 0);
     private int red;
     private int green;
     private int blue;

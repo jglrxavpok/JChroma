@@ -67,8 +67,13 @@ public class JChroma {
      */
     public void createKeyboardEffect(KeyboardEffect effect) {
         Structure param = effect.createParameter();
-        param.write();
-        int err = wrapper.CreateKeyboardEffect(effect.getType().ordinal(), param.getPointer(), Pointer.NULL);
-        throwIfError(err, "createKeyboardEffect");
+        int err;
+        if(param == null) {
+            err = wrapper.CreateKeyboardEffect(effect.getType().ordinal(), Pointer.NULL, Pointer.NULL);
+        } else {
+            param.write();
+            err = wrapper.CreateKeyboardEffect(effect.getType().ordinal(), param.getPointer(), Pointer.NULL);
+        }
+        throwIfError(err, "createKeyboardEffect("+effect.getType().name()+")");
     }
 }
