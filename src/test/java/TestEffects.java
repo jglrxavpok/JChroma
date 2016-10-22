@@ -24,6 +24,54 @@ public class TestEffects {
         chroma.free();
     }
 
+
+    @Test
+    public void combined() {
+        CustomKeyboardEffect heartEffect = new CustomKeyboardEffect();
+        ColorRef red = new ColorRef(255, 0, 0);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_V, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_F, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_G, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_E, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_R, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_T, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_Y, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_4, red);
+        heartEffect.setKeyColor(KeyboardKeys.RZKEY_6, red);
+
+        ProgressKeyboardEffect progressEffect = new ProgressKeyboardEffect(KeyboardKeys.RZKEY_F1, KeyboardKeys.RZKEY_F12);
+        progressEffect.setMinimumValue(0);
+        progressEffect.setMaximumValue(100);
+        progressEffect.setCurrentValue(0);
+        progressEffect.setInRangeColor(new ColorRef(255, 0, 0));
+        progressEffect.setOutsideRangeColor(new ColorRef(0, 0, 128));
+
+        long sleepTime = 10;
+        int maxCount = 50;
+
+        CustomKeyboardEffect combined = heartEffect.combine(progressEffect);
+        for (int count = 0; count < maxCount; count++) {
+            for (int i = 0; i < progressEffect.getMaximumValue()+1; i++) {
+                progressEffect.setCurrentValue(i);
+                chroma.createKeyboardEffect(combined);
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i < progressEffect.getMaximumValue()+1; i++) {
+                progressEffect.setCurrentValue(progressEffect.getMaximumValue()-i);
+                chroma.createKeyboardEffect(combined);
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     @Test
     public void heart() {
         CustomKeyboardEffect effect = new CustomKeyboardEffect();

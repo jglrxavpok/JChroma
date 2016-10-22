@@ -50,6 +50,15 @@ public class ColorRef {
         this.blue = blue;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ColorRef) {
+            ColorRef other = (ColorRef) obj;
+            return other.red == red && other.blue == blue && other.green == green;
+        }
+        return super.equals(obj);
+    }
+
     public static ColorRef fromRGB(int bgr) {
         int blue = bgr & 0xFF;
         int green = (bgr >> 8) & 0xFF;

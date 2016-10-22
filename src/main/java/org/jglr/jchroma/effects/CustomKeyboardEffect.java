@@ -93,6 +93,22 @@ public class CustomKeyboardEffect extends KeyboardEffect {
         setColor(KeyboardKeys.getRow(key), KeyboardKeys.getColumn(key), color);
     }
 
+    public void fill(ColorRef color) {
+        for (int j = 0; j < COLUMN_COUNT; j++) {
+            for (int i = 0; i < ROW_COUNT; i++) {
+                setColor(i, j, color);
+            }
+        }
+    }
+
+    public CustomKeyboardEffect combine(CustomKeyboardEffect other) {
+        return new CombinedCustomKeyboardEffect(this, other);
+    }
+
+    public ColorRef getColor(int row, int column) {
+        return ColorRef.fromBGR(struct.colors[column+row*COLUMN_COUNT]);
+    }
+
     public static class CustomStructure extends Structure implements Structure.ByReference {
 
         public int[] colors = new int[ROW_COUNT*COLUMN_COUNT];
