@@ -3,7 +3,13 @@ package org.jglr.jchroma;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import org.jglr.jchroma.devices.DeviceInfos;
+import org.jglr.jchroma.devices.GUIDStruct;
 import org.jglr.jchroma.effects.KeyboardEffect;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.UUID;
 
 /**
  * Entry point of the API, allows to create effects for the device and query Razer devices
@@ -76,5 +82,71 @@ public class JChroma {
             err = wrapper.CreateKeyboardEffect(effect.getType().ordinal(), param.getPointer(), Pointer.NULL);
         }
         throwIfError(err, "createKeyboardEffect("+effect.getType().name()+")");
+    }
+
+    /**
+     * Query for device informations
+     * @param deviceID
+     *          The device to query
+     * @return
+     *          The informations about the device
+     */
+    public DeviceInfos queryDevice(UUID deviceID) {
+        DeviceInfos deviceInfos = new DeviceInfos();
+        queryDevice(deviceID, deviceInfos);
+        return deviceInfos;
+    }
+
+    /**
+     * Query for device informations
+     * @param deviceID
+     *          The device to query
+     * @param deviceInfos
+     *          The object to store the infos in
+     */
+    public void queryDevice(UUID deviceID, DeviceInfos deviceInfos) {
+        DeviceInfos.DeviceInfosStruct struct = deviceInfos.getUnderlyingStructure();
+        int err = wrapper.QueryDevice(createGUID(deviceID), struct);
+        throwIfError(err, "queryDevice");
+        struct.read();
+    }
+
+    /**
+     * Tells if a given device is connected. If the query returns an error, this method will simply return <code>false</code>
+     * @param deviceID
+     *          The device ID
+     * @return
+     *          If the given device is connected
+     */
+    public boolean isDeviceConnected(UUID deviceID) {
+        try {
+            return queryDevice(deviceID).isConnected();
+        } catch (JChromaException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Converts a UUID to a GUID struct
+     * @param uuid
+     * @return
+     */
+    private GUIDStruct createGUID(UUID uuid) {
+        GUIDStruct struct = new GUIDStruct();
+        struct.data1 = (int) (uuid.getMostSignificantBits() >> 32);
+        struct.data2 = (short) ((uuid.getMostSignificantBits() >> 16) & 0xFFFF);
+        struct.data3 = (short) ((uuid.getMostSignificantBits()) & 0xFFFF);
+        struct.data4 = longToBytes(uuid.getLeastSignificantBits());
+
+        struct.write();
+        return struct;
+    }
+
+    public byte[] longToBytes(long x) {
+        byte[] bytes = new byte[Long.BYTES];
+        for (int i = 0; i < Long.BYTES; i++) {
+            bytes[Long.BYTES-i-1] = (byte) (x >> (i*8) & 0xFF);
+        }
+        return bytes;
     }
 }

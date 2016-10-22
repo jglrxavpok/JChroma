@@ -22,6 +22,9 @@ public class JChromaException extends RuntimeException {
 
             case 87:
                 return "Invalid parameter";
+
+            case 50:
+                return "Not supported";
         }
         return "Unknown("+err+")";
     }

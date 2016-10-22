@@ -133,11 +133,13 @@ public interface KeyboardKeys {
             RZKEY_KOR_7 = 0x050A,               /*!< (0xFF) */
             RZKEY_INVALID = 0xFFFF;              /*!< Invalid keys. */
 
+    int RZLED_LOGO = 0x1004; /* Razer logo */
+
     static int getRow(int key) {
-        return (key >> 8) & 0xFF;
+        return (key) & 0xFF;
     }
 
     static int getColumn(int key) {
-        return (key) & 0xFF;
+        return (key >> 8) & 0xFF;
     }
 }

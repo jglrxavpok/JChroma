@@ -6,6 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * """"""""Unit tests""""""""
+ */
 public class TestEffects {
 
     private JChroma chroma;
@@ -28,8 +31,8 @@ public class TestEffects {
         effect.setMinimumValue(0);
         effect.setMaximumValue(100);
         effect.setCurrentValue(0);
-        effect.setInRangeColor(new ColorRef(0, 0, 255));
-        effect.setOutsideRangeColor(new ColorRef(255, 0, 0));
+        effect.setInRangeColor(new ColorRef(255, 0, 0));
+        effect.setOutsideRangeColor(new ColorRef(0, 0, 128));
         long sleepTime = 10;
         for (int count = 0; count < maxCount; count++) {
             for (int i = 0; i < effect.getMaximumValue()+1; i++) {
@@ -63,7 +66,8 @@ public class TestEffects {
                     colors[i][j] = ColorRef.fromBGR((int)(Math.random()*0xFFFFFF));
                 }
             }
-            chroma.createKeyboardEffect(new CustomKeyboardEffect(colors));
+            CustomKeyboardEffect effect = new CustomKeyboardEffect(colors);
+            chroma.createKeyboardEffect(effect);
             try {
                 Thread.sleep(8000L/step);
             } catch (InterruptedException e) {

@@ -85,7 +85,7 @@ public class CustomKeyboardEffect extends KeyboardEffect {
      *          The color to assign
      */
     public void setColor(int row, int column, ColorRef color) {
-        struct.colors[row*ROW_COUNT+column] = color.getValue();
+        struct.colors[row+column*ROW_COUNT] = color.getValue();
     }
 
     public static class CustomStructure extends Structure implements Structure.ByReference {
