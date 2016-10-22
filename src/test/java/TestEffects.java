@@ -25,6 +25,29 @@ public class TestEffects {
     }
 
     @Test
+    public void heart() {
+        CustomKeyboardEffect effect = new CustomKeyboardEffect();
+        ColorRef red = new ColorRef(255, 0, 0);
+        effect.setKeyColor(KeyboardKeys.RZKEY_V, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_F, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_G, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_E, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_R, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_T, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_Y, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_4, red);
+        effect.setKeyColor(KeyboardKeys.RZKEY_6, red);
+
+
+        chroma.createKeyboardEffect(effect);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void progress() {
         int maxCount = 5;
         ProgressKeyboardEffect effect = new ProgressKeyboardEffect(KeyboardKeys.RZKEY_F1, KeyboardKeys.RZKEY_F12);

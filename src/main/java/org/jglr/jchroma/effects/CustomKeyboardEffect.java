@@ -2,6 +2,7 @@ package org.jglr.jchroma.effects;
 
 import com.sun.jna.Structure;
 import org.jglr.jchroma.utils.ColorRef;
+import org.jglr.jchroma.utils.KeyboardKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,7 +86,11 @@ public class CustomKeyboardEffect extends KeyboardEffect {
      *          The color to assign
      */
     public void setColor(int row, int column, ColorRef color) {
-        struct.colors[row+column*ROW_COUNT] = color.getValue();
+        struct.colors[column+row*COLUMN_COUNT] = color.getValue();
+    }
+
+    public void setKeyColor(int key, ColorRef color) {
+        setColor(KeyboardKeys.getRow(key), KeyboardKeys.getColumn(key), color);
     }
 
     public static class CustomStructure extends Structure implements Structure.ByReference {
